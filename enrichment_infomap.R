@@ -1,6 +1,6 @@
 #function_enrichment_infomap
 #takes an analyzed network
-#and a list of NodeSets (for instance, biological pathways)
+#and a Named list of NodeSets (for instance, biological pathways)
 #returns a list of enriched pathways through hypergeometric testing
 
 function_enrichment_infomap = function(nw_an, NodeSets){
