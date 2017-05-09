@@ -31,6 +31,32 @@ NetworkAnalyzer = function(g, directed = FALSE){
                    component = component,
                    infomap = infomap)
   }
+  if(directed == TRUE){
+    V(g)$degree <- degree(g, mode = "all")
+    V(g)$indegree <- degree(g, mode = "in")
+    V(g)$outdegree <- degree(g, mode = "out")
+    V(g)$betweenness <- betweenness(g, directed = TRUE)
+    V(g)$closeness <- closeness(g, mode = "all")
+    V(g)$closeness_in <- closeness(g, mode = "in")
+    V(g)$closeness_out <- closeness(g, mode = "out")
+    
+    average_path_length = average.path.length(g, directed = TRUE)
+    ClusteringCoefficient = transitivity(g, type = "global")
+    GraphDiameter = diameter(g, directed = TRUE)
+    
+    component = components(g)
+    V(g)$component = component$membership
+    
+    infomap = infomap.community(g)
+    V(g)$infomap = infomap$membership
+    
+    results = list(g = g, 
+                   average_path_length = average_path_length, 
+                   ClusteringCoefficient = ClusteringCoefficient, 
+                   GraphDiameter = GraphDiameter,
+                   component = component,
+                   infomap = infomap)
+  }
 }
 
 
