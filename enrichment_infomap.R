@@ -2,7 +2,7 @@
 #takes an analyzed network
 #and a Named list of NodeSets (for instance, biological pathways)
 #returns a list of enriched pathways through hypergeometric testing
-
+library(HTSanalyzeR)
 function_enrichment_infomap = function(nw_an, NodeSets){
   list_enriched_pws = list()
   for(i in 1:max(nw_an$infomap$membership)){

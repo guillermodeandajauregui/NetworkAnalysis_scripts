@@ -8,10 +8,14 @@
 
 library(igraph)
 
-NetworkAnalyzer = function(g, directed = FALSE){
+NetworkAnalyzer = function(g, directed = FALSE, skip.betweenness = FALSE){
   if(directed == FALSE){
     V(g)$degree <- degree(g)
+    
+    if(skip.betweenness == FALSE){
     V(g)$betweenness <- betweenness(g, directed = FALSE)
+    }
+    
     V(g)$closeness <- closeness(g)
     
     average_path_length = average.path.length(g, directed = FALSE)
@@ -35,7 +39,9 @@ NetworkAnalyzer = function(g, directed = FALSE){
     V(g)$degree <- degree(g, mode = "all")
     V(g)$indegree <- degree(g, mode = "in")
     V(g)$outdegree <- degree(g, mode = "out")
+    if(skip.betweenness == FALSE){
     V(g)$betweenness <- betweenness(g, directed = TRUE)
+    }
     V(g)$closeness <- closeness(g, mode = "all")
     V(g)$closeness_in <- closeness(g, mode = "in")
     V(g)$closeness_out <- closeness(g, mode = "out")
