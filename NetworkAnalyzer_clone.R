@@ -63,6 +63,7 @@ NetworkAnalyzer = function(g, directed = FALSE, skip.betweenness = FALSE){
                    component = component,
                    infomap = infomap)
   }
+  return(results)
 }
 
 
