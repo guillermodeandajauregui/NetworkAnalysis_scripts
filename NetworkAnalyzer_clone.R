@@ -8,11 +8,17 @@
 
 library(igraph)
 
-NetworkAnalyzer = function(g, directed = FALSE, skip.betweenness = FALSE){
+NetworkAnalyzer = function(g, directed = FALSE, skip.betweenness = FALSE, workaround.betweenness = FALSE){
   if(directed == FALSE){
     V(g)$degree <- degree(g)
     
-    if(skip.betweenness == FALSE){
+    if(workaround.betweenness == TRUE && skip.betweenness == FALSE){
+      copy = g
+      E(copy)$weight = rep(1, length(E(copy)))
+      V(g)$betweenness <- betweenness(copy, directed = FALSE)
+    }
+    
+    if(workaround.betweenness == FALSE && skip.betweenness == FALSE){
     V(g)$betweenness <- betweenness(g, directed = FALSE)
     }
     
@@ -39,9 +45,17 @@ NetworkAnalyzer = function(g, directed = FALSE, skip.betweenness = FALSE){
     V(g)$degree <- degree(g, mode = "all")
     V(g)$indegree <- degree(g, mode = "in")
     V(g)$outdegree <- degree(g, mode = "out")
+    
+    if(workaround.betweenness == TRUE && skip.betweenness == FALSE){
+      copy = g
+      E(copy)$weight = rep(1, length(E(copy)))
+      V(g)$betweenness <- betweenness(copy, directed = TRUE)
+    }
+    
     if(skip.betweenness == FALSE){
     V(g)$betweenness <- betweenness(g, directed = TRUE)
     }
+    
     V(g)$closeness <- closeness(g, mode = "all")
     V(g)$closeness_in <- closeness(g, mode = "in")
     V(g)$closeness_out <- closeness(g, mode = "out")
