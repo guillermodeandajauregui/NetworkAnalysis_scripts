@@ -172,12 +172,6 @@ network_community_evolution_analysis <-function(gi, gj, k, grouping = "infomap")
 }
 
 
-prueba_funcion_analisis<- network_community_evolution_analysis(reactome_comparison_graphs$alfa, reactome_comparison_graphs$delta, 0.2)
-rm(prueba_funcion_analisis)
-k = 0.2
-simi_k = ifelse(csm < k, 0, csm)
-
-
 formation_function24 <- function(simi_k, k){
   
   #return which communities in j where formed
@@ -221,12 +215,6 @@ comm_sim_matrix <- function(graph_a, graph_b, community_value = "infomap", k = 0
   }
   return(matriz)
 }
-
-csm = comm_sim_matrix(graph_a = reactome_comparison_graphs$alfa, 
-                      graph_b = reactome_comparison_graphs$delta, 
-                      community_value = "infomap,", k = 0)
-
-names(which(colSums(csm)==0))
 
 #2) 
 
