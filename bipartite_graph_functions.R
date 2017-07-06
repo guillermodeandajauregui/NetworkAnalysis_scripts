@@ -62,7 +62,7 @@ NeighborsDistance2.multi <- function(g, v=V(g), size = FALSE){
 proctor = proc.time()
 test_temp = NeighborsDistance2.multi(gargantua, size = TRUE)
 proctor = proc.time() - proctor
-
+#
 plot(x = degree(prettytest, v = V(prettytest)[type == TRUE]), 
      y = NeighborsDistance2.multi(prettytest, size = TRUE, v = V(prettytest)[type == TRUE]) 
      )
@@ -118,14 +118,22 @@ V(bg)[type == "TRUE"]
 mean(sapply(X = V(bg)[type == "FALSE"], ClusteringCoefficientPoint, g = bg))
 a = sapply(X = V(bg)[type == TRUE], ClusteringCoefficientPoint, g = bg)
 
-#TO DO: CUMULATIVE DISTRIBUTION PLOTTING
-plot(x = degree())
-b = a[order(a)]
-plot(prop.table(b))
-plot(cumsum(prop.table(b)))
+#Helper cumulative distribution function
+
+cumulative.dist <- function(x, by.breaks = 0.01){
+  breaks = seq(0,1, by = by.breaks)
+  x.cut = cut(x, breaks, right = FALSE)
+  x.freq = table(x.cut)
+  x.cumsum = cumsum(x.freq)
+  return(x.cumsum)
+}
+
+#tests proctor = proc.time()
+proctor = proc.time()
+test_temp = sapply(X = V(gargantua), FUN = ClusteringCoefficientPoint, g = gargantua)
+proctor = proc.time() - proctor
 
 
-ecdf(a)
-knots(ecdf(a))
-cumsum(a)
-?prop.table(a)
+
+
+cumulative.dist(a, by.breaks = 0.001)
